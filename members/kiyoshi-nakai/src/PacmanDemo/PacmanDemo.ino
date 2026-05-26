@@ -72,11 +72,11 @@ byte pacmanCloseR[8] = {0x0E,0x1F,0x1F,0x1F,0x0E,0x00,0x00,0x00}; // 口閉じ
 byte pacmanOpenL[8]  = {0x0E,0x1F,0x15,0x1F,0x0E,0x00,0x00,0x00}; // 口開き
 byte pacmanCloseL[8] = {0x0E,0x1F,0x1F,0x1F,0x0E,0x00,0x00,0x00}; // 口閉じ
 // 上向き
-byte pacmanOpenU[8]  = {0x0E,0x1B,0x17,0x0E,0x0E,0x0E,0x0E,0x00}; // 口開き
-byte pacmanCloseU[8] = {0x0E,0x1F,0x1F,0x0E,0x0E,0x0E,0x0E,0x00}; // 口閉じ
+byte pacmanOpenU[8]  = {0x0E,0x1B,0x17,0x0E,0x00,0x00,0x00,0x00}; // 口開き
+byte pacmanCloseU[8] = {0x0E,0x1F,0x1F,0x0E,0x00,0x00,0x00,0x00}; // 口閉じ
 // 下向き
-byte pacmanOpenD[8]  = {0x00,0x0E,0x0E,0x0E,0x0E,0x17,0x1B,0x0E}; // 口開き
-byte pacmanCloseD[8] = {0x00,0x0E,0x0E,0x0E,0x0E,0x1F,0x1F,0x0E}; // 口閉じ
+byte pacmanOpenD[8]  = {0x00,0x00,0x00,0x00,0x0E,0x17,0x1B,0x0E}; // 口開き
+byte pacmanCloseD[8] = {0x00,0x00,0x00,0x00,0x0E,0x1F,0x1F,0x0E}; // 口閉じ
 byte ghostChar[8]    = {0x0E,0x1F,0x15,0x1F,0x1B,0x1B,0x00,0x00};
 byte altChar[8]      = {0x04,0x0E,0x15,0x04,0x04,0x15,0x0E,0x04};
 
@@ -86,6 +86,29 @@ bool pacmanMouthOpen = true;
 // --- IRリモコンのキャラクター切替コード例（要実機で確認） ---
 #define IR_CODE_CHAR_A 0xFF30CF
 #define IR_CODE_CHAR_B 0xFF18E7
+
+#define IR_CODE_CHAR_POWER  0xFFA25D
+#define IR_CODE_CHAR_VOL_U  0xFF629D
+#define IR_CODE_CHAR_FUNC   0xFFE21D
+#define IR_CODE_CHAR_RR     0xFF22DD
+#define IR_CODE_CHAR_PLAY   0xFF02FD
+#define IR_CODE_CHAR_FF     0xFFC23D
+#define IR_CODE_CHAR_DOWN   0xFFE01F
+#define IR_CODE_CHAR_VOL_D  0xFFA857
+#define IR_CODE_CHAR_UP     0xFF906F
+#define IR_CODE_CHAR_NUM0   0xFF6897
+#define IR_CODE_CHAR_EQ     0xFF9867
+#define IR_CODE_CHAR_STREPT 0xFFB04F
+#define IR_CODE_CHAR_NUM1   0xFF30CF
+#define IR_CODE_CHAR_NUM2   0xFF18E7
+#define IR_CODE_CHAR_NUM3   0xFF7A85
+#define IR_CODE_CHAR_NUM4   0xFF10EF
+#define IR_CODE_CHAR_NUM5   0xFF38C7
+#define IR_CODE_CHAR_NUM6   0xFF5AA5
+#define IR_CODE_CHAR_NUM7   0xFF42BD
+#define IR_CODE_CHAR_NUM8   0xFF4AB5
+#define IR_CODE_CHAR_NUM9   0xFF52AD
+
 
 void setup() {
   pinMode(PIN_JOY_SW, INPUT_PULLUP);
@@ -302,25 +325,31 @@ void drawPacman(uint8_t x, uint8_t y) {
     } else if (direction == 1) { // 左
       if (pacmanMouthOpen) {
         lcd.createChar(0, pacmanOpenL);
+        lcd.setCursor(x, y);
         lcd.write(byte(0));
       } else {
         lcd.createChar(1, pacmanCloseL);
+        lcd.setCursor(x, y);
         lcd.write(byte(1));
       }
     } else if (direction == 2) { // 上
       if (pacmanMouthOpen) {
         lcd.createChar(0, pacmanOpenU);
+        lcd.setCursor(x, y);
         lcd.write(byte(0));
       } else {
         lcd.createChar(1, pacmanCloseU);
+        lcd.setCursor(x, y);
         lcd.write(byte(1));
       }
     } else if (direction == 3) { // 下
       if (pacmanMouthOpen) {
         lcd.createChar(0, pacmanOpenD);
+        lcd.setCursor(x, y);
         lcd.write(byte(0));
       } else {
         lcd.createChar(1, pacmanCloseD);
+        lcd.setCursor(x, y);
         lcd.write(byte(1));
       }
     } else {
